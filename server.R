@@ -16,7 +16,6 @@ shinyServer(function(input, output) {
     })
   
   output$wordCloud <- renderPlot({
-    
     wordcloud(corpusData(), min.freq=input$minFreq, max.words=input$maxWord, colors=brewer.pal(8, "Dark2"))
   })
   
