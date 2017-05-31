@@ -27,6 +27,16 @@ shinyServer(function(input, output) {
     return(d)
   })
   
-  output$freqTable <- renderDataTable({return(head(tdm(), input$maxWord))})
+  output$freqTable <- renderPlot({
+    plotData <- head(tdm(), input$maxWord)
+    p <- ggplot(plotData, aes(x = reorder(word, freq), y = freq))
+    p <- p + geom_bar(aes(fill = freq), stat = 'identity')
+    #p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    p <- p + xlab("Words") + coord_flip() + ylab("Frequencies")
+    p <- p + geom_text(aes(hjust = -.1, label = freq), color = "red")
+    p <- p + scale_fill_gradient(low = 'blue', high = 'orange')
+    return(p)
+    #return(ggplotly(p))
+  })
   
 })

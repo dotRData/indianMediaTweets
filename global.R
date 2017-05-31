@@ -1,7 +1,8 @@
 #rm(list = ls())
 
+library(shiny)
 library(ggplot2)
-library('data.table')
+library(data.table)
 library(ggalt)
 library(tm)
 library(wordcloud)
