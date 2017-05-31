@@ -1,18 +1,15 @@
 shinyServer(function(input, output) {
   
   requiredData <- reactive({
-    data <- rawData[date >= input$dateRange[1] & date <= input$dateRange[2]]
-    return(data)
+    rawData[date >= input$dateRange[1] & date <= input$dateRange[2]]
   })
   
   output$basicInfo <- renderPrint({
-    x <- paste("Number of Tweets are", nrow(requiredData()), '\n')
-    return(cat(x))
+    paste("Number of Tweets are", nrow(requiredData()), '\n')
     })
   
   corpusData <- reactive({
-    data <- cleanTextVector(requiredData()[, text])
-    return(data)
+    cleanTextVector(requiredData()[, text])
     })
   
   output$wordCloud <- renderPlot({
