@@ -1,4 +1,4 @@
-#rm(list = ls())
+rm(list = ls())
 
 library(shiny)
 library(ggplot2)
@@ -8,8 +8,9 @@ library(tm)
 library(wordcloud)
 
 source("dataPreparation.R")
-#setwd("/Users/addhyanpandey/pWorkspace/twitter_analysis/media_political_relationship/shiny/")
 setDT(rawData)
+
+wordsToRemove <- c('republic', 'breaking', 'now', 'will')
 
 cleanTextVector <- function(x){
   textData   <- x
@@ -18,6 +19,7 @@ cleanTextVector <- function(x){
   corpusData <- tm_map(corpusData, removeNumbers)
   corpusData <- tm_map(corpusData, stripWhitespace)
   corpusData <- tm_map(corpusData, removePunctuation)
+  corpusData <- tm_map(corpusData, removeWords, wordsToRemove)
   corpusData <- tm_map(corpusData, removeWords, stopwords('english'))
   return(corpusData)
 }

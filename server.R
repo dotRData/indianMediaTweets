@@ -1,20 +1,9 @@
 shinyServer(function(input, output) {
   
-  requiredData <- reactive({
-    rawData[date >= input$dateRange[1] & date <= input$dateRange[2]]
-  })
-  
-  output$basicInfo <- renderPrint({
-    paste("Number of Tweets are", nrow(requiredData()), '\n')
-    })
-  
-  corpusData <- reactive({
-    cleanTextVector(requiredData()[, text])
-    })
-  
-  output$wordCloud <- renderPlot({
-    wordcloud(corpusData(), min.freq=input$minFreq, max.words=input$maxWord, colors=brewer.pal(8, "Dark2"))
-  })
+  requiredData     <- reactive({rawData[date >= input$dateRange[1] & date <= input$dateRange[2]]})
+  output$basicInfo <- renderPrint({cat(paste("Number of Tweets are", nrow(requiredData()), '\n'))})
+  corpusData       <- reactive({cleanTextVector(requiredData()[, text])})
+  output$wordCloud <- renderPlot({wordcloud(corpusData(), min.freq=input$minFreq, max.words=input$maxWord, colors=brewer.pal(8, "Dark2"))})
   
   tdm <- reactive({
     dtm <- TermDocumentMatrix(corpusData())
@@ -30,7 +19,7 @@ shinyServer(function(input, output) {
     p <- p + geom_bar(aes(fill = freq), stat = 'identity')
     #p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
     p <- p + xlab("Words") + coord_flip() + ylab("Frequencies")
-    p <- p + geom_text(aes(hjust = -.1, label = freq), color = "red")
+    p <- p + geom_text(aes(hjust = 1.1, label = freq), color = "white")
     p <- p + scale_fill_gradient(low = 'blue', high = 'orange')
     return(p)
     #return(ggplotly(p))

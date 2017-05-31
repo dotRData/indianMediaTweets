@@ -1,6 +1,6 @@
 twitterHandles <- c('@republic')
-minDate        <- as.Date("2017-05-02")
-maxDate        <- as.Date("2017-05-28")
+minDate        <- as.Date("2017-05-01")
+maxDate        <- as.Date("2017-05-30")
 
 shinyUI(navbarPage("Indian-News Channels",
                    tabPanel("Twitter",
